@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Secure VM & Reverse Proxy Deployment Checklist</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1, h2 {
+      color: #1e90ff;
+    }
+    ul {
+      list-style-type: '✅ ';
+      padding-left: 1.5em;
+      margin-bottom: 30px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    hr {
+      margin: 40px 0;
+    }
+    .section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔐 Secure VM & Reverse Proxy Deployment Checklist</h1>
+
+  <div class="section">
+    <h2>🧩 Common Security Steps (All VMs)</h2>
+    <ul>
+      <li>SSH Hardening – Disable root login, use key auth, restrict IPs</li>
+      <li>UFW (Firewall) – Allow only necessary ports</li>
+      <li>Fail2Ban – Block brute force attacks (esp. SSH)</li>
+      <li>Automatic Security Updates – unattended-upgrades + autoremove</li>
+      <li>Disable Unused Services – Minimize attack surface</li>
+      <li>System Monitoring (Netdata, etc.) – Resource + network visibility</li>
+      <li>Regular Cleanup – Remove unused packages, old kernels, logs</li>
+      <li>Template Maintenance – Boot, update, shut down monthly or via cron</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>🖥️ New VM Deployment (Specific)</h2>
+    <ul>
+      <li>Create limited user (non-root) – Use sudo for admin tasks</li>
+      <li>SSH Port Restriction – Change default port (optional)</li>
+      <li>Set hostname & FQDN – Easier identification</li>
+      <li>Setup log rotation – Keep disk usage clean</li>
+      <li>Test update script manually first – Before automating</li>
+      <li>Keep templates updated – Use Proxmox script or cron</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>🌐 Reverse Proxy Server Setup (Specific)</h2>
+    <ul>
+      <li>Only expose 80/443 + SSH – Block all other ports</li>
+      <li>HTTPS Only – Use Let’s Encrypt & redirect HTTP to HTTPS</li>
+      <li>Enable Security Headers – HSTS, CSP, X-Frame-Options, etc.</li>
+      <li>Add Auth for Admin Interfaces – Protect Nginx Proxy Manager or UIs</li>
+      <li>IP Whitelisting for admin access – Optional but adds security</li>
+      <li>Monitor proxy logs – Watch failed attempts or abuse</li>
+      <li>Don't host other apps on proxy – Keep it lean & hardened</li>
+      <li>Keep NPM/Nginx updated – Apply patches, renew certs</li>
+      <li>Back up config & SSL certs – For disaster recovery</li>
+      <li>Use proxy even for internal-only apps – Add HTTP auth if needed</li>
+    </ul>
+  </div>
+
+</body>
+</html>
